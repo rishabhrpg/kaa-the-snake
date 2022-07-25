@@ -23,7 +23,7 @@ export class Snake {
     constructor() { 
         this.snakeType = {
             snake: [
-                { x: 14, y: 11 },
+                { x: 14, y: 14 },
             ]
         };
 
@@ -32,13 +32,16 @@ export class Snake {
 
     public run(snakeDirection: SnakeDirection): Snake {
         this.snakeDirection = snakeDirection;
+        console.log('Moving Snake');
+        
         this.move(snakeDirection);
 
         if(this.checkCollisionWithFood(this.food)){
             this.render()
             return this;
         }
-        if(this.checkCollisionWithWall()) {
+        if(this.checkCollisionWithWall() || this.checkCollisionWithSnake()) {
+            debugger;
             alert('Game Over');
             this.reset();
             return this;
@@ -56,6 +59,18 @@ export class Snake {
         if(this.snakeType.snake[0].x === food.foodType.food.x && this.snakeType.snake[0].y === food.foodType.food.y) {
             this.eat(food);
             return true;
+        }
+        return false;
+    }
+
+    private checkCollisionWithSnake(): boolean {
+        console.log('Checking Collision with Snake');
+    
+        for (let i = 1; i < this.snakeType.snake.length; i++) {
+            console.log('Checking collision', this.snakeType.snake[0], this.snakeType.snake[i]);
+            if (this.snakeType.snake[0].x === this.snakeType.snake[i].x && this.snakeType.snake[0].y === this.snakeType.snake[i].y) {                
+                return true;
+            }
         }
         return false;
     }
@@ -82,7 +97,7 @@ export class Snake {
         boardElement.innerHTML = '';
 
         this.snakeType.snake.forEach((part, index) => {
-            console.log(part);
+            // console.log(part);
             const snakePartDivElement = document.createElement('div');
             snakePartDivElement.style.gridRowStart = part.y.toString();
             snakePartDivElement.style.gridColumnStart = part.x.toString();

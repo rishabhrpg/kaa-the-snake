@@ -8,8 +8,8 @@ export class KeyboardInput {
         window.addEventListener('keydown', (event) => {
             switch (event.key) {
                 case 'ArrowUp':
-                    console.log('ArrowUp');
-                    snakeDirection({ x: 0, y: -1 });
+                    console.log('ArrowUp');                    
+                    snakeDirection({ x: 0, y: -1 });                    
                     break;
                 case 'ArrowDown':
                     console.log('ArrowDown');
@@ -22,6 +22,12 @@ export class KeyboardInput {
                 case 'ArrowRight':
                     console.log('ArrowRight');
                     snakeDirection({ x: 1, y: 0 });
+                    break;
+
+                case 'd':
+                    console.log('Debugging mode : stop game');
+                    // snakeDirection({ x: 0, y: 0 });
+                    debugger;
                     break;
                 default:
             }

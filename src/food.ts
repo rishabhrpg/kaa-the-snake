@@ -4,17 +4,20 @@ export interface FoodType {
 
 export class Food {
     public foodType: FoodType = {
-        food: { x: 0, y: 0 }
+        food: { x: 1, y: 1 }
     }
     constructor() {
         this.foodType = {
-            food: { x: 16, y: 0 }
+            food: { x: 16, y: 1 }
         }
     }
     public generateFood(): Food {        
         this.foodType.food = {
             x: Math.floor(Math.random() * 18),
             y: Math.floor(Math.random() * 18)
+        }
+        if(this.foodType.food.x === 0 || this.foodType.food.y === 0 ){
+           this.foodType = this.generateFood().foodType;            
         }
         console.log(' New Food spawned at: ', this.foodType.food);
         return this;
