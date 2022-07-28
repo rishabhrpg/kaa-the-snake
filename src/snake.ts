@@ -1,5 +1,6 @@
 import { SnakeDirection } from "./keyboard-input.js";
 import { Food } from './food.js';
+import { HighScore } from './high-score.js';
 
 export interface SnakePartType {
     x: number;
@@ -20,6 +21,9 @@ export class Snake {
 
     public food = new Food();
 
+    public score: number = 0;
+    public highScore: HighScore = new HighScore();
+
     constructor() { 
         this.snakeType = {
             snake: [
@@ -27,7 +31,8 @@ export class Snake {
             ]
         };
 
-        this.food.generateFood();
+        this.highScore.render();
+        //this.food.generateFood(this.snakeType);
     }
 
     public run(snakeDirection: SnakeDirection): Snake {
@@ -41,7 +46,6 @@ export class Snake {
             return this;
         }
         if(this.checkCollisionWithWall() || this.checkCollisionWithSnake()) {
-            debugger;
             alert('Game Over');
             this.reset();
             return this;
@@ -52,7 +56,8 @@ export class Snake {
 
     private eat(food: Food): void {
         this.snakeType.snake.push(food.foodType.food);
-        this.food.generateFood();
+        this.food.generateFood(this.snakeType);
+        this.score++;
     }
 
     private checkCollisionWithFood(food: Food): boolean {
@@ -109,6 +114,9 @@ export class Snake {
             boardElement.appendChild(snakePartDivElement);
         });
 
+        const scoreElement = document.querySelector('.score') as HTMLDivElement;
+        scoreElement.innerHTML = `Score: ${this.score}`;
+
         this.food.render();
     }
 
@@ -120,6 +128,8 @@ export class Snake {
         };
         
         this.snakeDirection = { x: 0, y: 0 };
-        this.food.generateFood();
+        this.food.generateFood(this.snakeType);
+        this.highScore.setHighScore(this.score).render();
+        this.score = 0;
     }
 }

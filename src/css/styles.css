@@ -40,7 +40,7 @@
     background-color: red;
 }
 
-#fps_counter {
+#fps_counter,.game-scores {
     position: absolute;
     top: 0;
     left: 0;
@@ -50,4 +50,10 @@
     padding: 0.5vmin;
     border-radius: 0.5vmin;
     z-index: 100;
+}
+
+.game-scores {
+    top: 0;
+    right: 0;
+    left: auto;
 }

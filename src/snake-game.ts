@@ -1,16 +1,16 @@
 import { Snake } from './snake.js';
 import { KeyboardInput, SnakeDirection } from './keyboard-input.js';
 
-
 export class SnakeGame {
 
     private lastRenderTimestamp = 0;
-    private speed = 5;
+    private speed = 7;
     public fps = 0;
     public totalFrames = 0;
     private fpsCounterElement = document.querySelector('#fps_counter') as HTMLDivElement;
     public snake = new Snake();
     public snakeDirection: SnakeDirection = { x: 0, y: 0 };
+
     public keyboardEventController = {
         previousInputTimestamp: 0,
         currentTimestamp: 0,
@@ -33,12 +33,14 @@ export class SnakeGame {
 
     public start() {
         new KeyboardInput().registerKeyboardInput((snakeDirection) => {
-            if (this.keyboardEventController.currentTimestamp < this.keyboardEventController.previousInputTimestamp + 150) {
-                return false;
+            if (this.keyboardEventController.currentTimestamp < this.keyboardEventController.previousInputTimestamp + 75) {
+                return;
             }
             this.keyboardEventController.previousInputTimestamp = this.keyboardEventController.currentTimestamp;
             this.snakeDirection = this.attemptNewSnakeDirection(this.snakeDirection, snakeDirection);
         });
+
+        // this.highScore.setHighScore(100);
         window.requestAnimationFrame((ctime) => this.gameLoop(ctime));
     }
 
